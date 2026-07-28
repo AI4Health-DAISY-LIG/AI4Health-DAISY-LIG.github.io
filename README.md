@@ -85,7 +85,7 @@ Deploy to GitHubPages for automated builds and hosting.
 To make this template your own, you don't need to touch the core logic. Simply follow these steps:
 
 ### 1. Configure Navigation
-The entire site structure (sidebar, breadcrumbs, and links) is driven by `settings/documents.ts`. To add a new section or change the order of pages, simply modify this file. The routing system will automatically detect your changes.
+The entire site structure (sidebar, breadpoints, and links) is driven by `settings/documents.ts`. To add a new section or change the order of pages, simply modify this file. The routing system will automatically detect your changes.
 
 ### 2. Add Content
 Content is written in **MDX** format. Create a folder for your page within `contents/docs/[your-slug]/` and add an `index.mdx` file. You can use powerful built-in React components like `<Note />`, `<Step />`, or `<Code />` directly inside your Markdown to create interactive documentation.
@@ -93,6 +93,10 @@ Content is written in **MDX** format. Create a folder for your page within `cont
 ### 3. Branding & SEO
 Update your site's identity (Title, Description, OpenGraph images, and Twitter cards) by modifying the `Settings` configuration. This ensures your documentation looks professional when shared on social media and is optimized for search engines.
 
+### 4. Custom URLs
+To use a custom URL (e.g., changing `/installation` to `/guide-setup`), you must:
+1. Update the `href` property in `settings/documents.ts`.
+2. Rename the corresponding folder in `contents/docs/[your-slug]/` to match the new slug.
 
 ---
 
@@ -150,7 +154,7 @@ This project is licensed under the MIT License. See the [LICENSE](./LICENSE) fil
 
 For support or inquiries:
 
-Vincent Vu — [@rubxvi](https://x.com/rubixvi)
+Vincent Vu — [@rubxvi](https://x.com/rubxvi)
 
 Rubix Studios — [https://rubixstudios.com.au](https://rubixstudios.com.au)
 
