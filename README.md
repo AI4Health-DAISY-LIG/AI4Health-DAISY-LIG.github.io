@@ -5,16 +5,16 @@ Documents is a modern documentation starter kit built with **Next.js**, **React*
 > **Demo**: [https://rubix-documents.vercel.app](https://rubix-documents.vercel.app)
 
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
-[![Top Language](https://img.shields.io/github/languages/top/rubixvi/rubix-documents)](https://github.com/rubixvi/rubix-documents)
+[![Top Language](https://img.shields.io/github/languages/top/rubixvi/rubix-documents)](https://img.shields.io/github/languages/top/rubixvi/rubix-documents)
 
 ![GitHub commit activity](https://img.shields.io/github/commit-activity/m/rubixvi/rubix-documents)
-[![Last Commit](https://img.shields.io/github/last-commit/rubixvi/rubix-documents)](https://github.com/rubixvi/rubix-documents/commits)
-[![GitHub issues](https://img.shields.io/github/issues/rubixvi/rubix-documents)](https://github.com/rubixvi/rubix-documents/issues)
-[![GitHub pull requests](https://img.shields.io/github/issues-pr/rubixvi/rubix-documents)](https://github.com/rubixvi/rubix-documents/pulls)
+[![Last Commit](https://img.shields.io/github/last-commit/rubixvi/rubix-documents)](https://img.shields.io/github/last-commit/rubixvi/rubix-documents)
+[![GitHub issues](https://img.shields.io/github/issues/rubixvi/rubix-documents)](https://img.shields.io/github/issues/rubixvi/rubix-documents)
+[![GitHub pull requests](https://img.shields.io/github/pulls/rubixvi/rubix-documents)](https://img.shields.io/github/pulls/rubixvi/rubix-documents)
 
-[![GitHub stars](https://img.shields.io/github/stars/rubixvi/rubix-documents)](https://github.com/rubixvi/rubix-documents/stargazers)
-[![GitHub forks](https://img.shields.io/github/forks/rubixvi/rubix-documents)](https://github.com/rubixvi/rubix-documents/network)
-[![GitHub repo size](https://img.shields.io/github/repo-size/rubixvi/rubix-documents)](https://github.com/rubixvi/rubix-documents)
+[![GitHub stars](https://img.shields.io/github/stars/rubix-documents)](https://img.shields.io/github/stars/rubixvi/rubix-documents)
+[![GitHub forks](https://img.shields.io/github/forks/rubix-documents)](https://img.shields.io/github/forks/rubixvi/rubix-documents)
+[![GitHub repo size](https://img.shields.io/github/repo-size/rubix-documents)](https://img.shields.io/github/repo-size/rubixvi/rubix-documents)
 
 [![Deploy with Vercel](https://vercel.com/button)](https://vercel.com/new/clone?repository-url=https%3A%2F%2Fgithub.com%2Frubixvi%2Frubix-documents&project-name=my-documents&repository-name=my-documents&demo-title=Documents&demo-description=This%20Document%20Starter%20Kit%20is%20developed%20with%20Next.js%2C%20Tailwind%20CSS%20and%20TypeScript.%20It%20serves%20as%20a%20flexible%20and%20scalable%20foundation%20for%20building%20documentation%20websites%20or%20content-driven%20projects.&demo-url=https%3A%2F%2Frubix-documents.vercel.app%2F&demo-image=https%3A%2F%2Fgithub.com%2Frubixvi%2Frubix-documents%2Fblob%2Fmain%2Fpublic%2Fscreens%2Fscreen-1.png)
 
@@ -55,6 +55,21 @@ Built for technical and content-driven projects, this starter kit supports Markd
 
 - Fuzzy search with term highlighting
 - Planned: AI-powered knowledgebase tools
+
+---
+
+## Customization
+
+To make this template your own, you don't need to touch the core logic. Simply follow these steps:
+
+### 1. Configure Navigation
+The entire site structure (sidebar, breadcrumbs, and links) is driven by `settings/documents.ts`. To add a new section or change the order of pages, simply modify this file. The routing system will automatically detect your changes.
+
+### 2. Add Content
+Content is written in **MDX** format. Create a folder for your page within `contents/docs/[your-slug]/` and add an `index.mdx` file. You can use powerful built-in React components like `<Note />`, `<Step />`, or `<Code />` directly inside your Markdown to create interactive documentation.
+
+### 3. Branding & SEO
+Update your site's identity (Title, Description, OpenGraph images, and Twitter cards) by modifying the `Settings` configuration. This ensures your documentation looks professional when shared on social media and is optimized for search engines.
 
 ---
 
@@ -137,7 +152,7 @@ This project is licensed under the MIT License. See the [LICENSE](./LICENSE) fil
 
 For support or inquiries:
 
-Vincent Vu — [@rubixvi](https://x.com/rubixvi)
+Vincent Vu — [@rubxvi](https://x.com/rubixvi)
 
 Rubix Studios — [https://rubixstudios.com.au](https://rubixstudios.com.au)
 
