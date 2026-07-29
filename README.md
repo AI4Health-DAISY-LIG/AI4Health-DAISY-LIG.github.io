@@ -155,6 +155,50 @@ Utilisez ceci pour des pages comme "About", "Contact" ou "Projects" qui n'ont pa
      href: '/projects', // L'URL doit correspondre exactement au nom du dossier dans app/                                                          
    }                                                                                                                                      
 
+##### Ajouter du contenu dans la page standalone:
+Oui, c'est exactement cela. Pour que votre fonction getProjects puisse trouver et lire les données, vous devez respecter une structure de dossiers 
+précise.                                                                                                                                           
+
+Chaque projet doit avoir son propre dossier à l'intérieur de contents/projects/, et ce dossier doit contenir un fichier nommé index.mdx.           
+
+La structure exacte à suivre :                                                                                                                     
+
+                                                                                                                                                   
+votre-projet/                                                                                                                                      
+└── contents/                                                                                                                                      
+    └── projects/                                                                                                                                  
+        ├── projet-alpha/                                                                                                                          
+        │   └── index.mdx      <-- Le contenu du projet Alpha                                                                                      
+        ├── projet-beta/                                                                                                                           
+        │   └── index.mdx      <-- Le contenu du projet Beta                                                                                       
+        └── projet-gamma/                                                                                                                          
+            └── index.mdx      <-- Le contenu du projet Gamma                                                                                      
+                                                                                                                                                   
+
+Ce que doit contenir le fichier index.mdx :                                                                                                        
+
+Pour que la carte (Card) s'affiche correctement avec les bonnes informations, votre fichier index.mdx doit impérativement contenir le frontmatter  
+suivant au début du fichier :                                                                                                                      
+
+                                                                                                                                                   
+---                                                                                                                                                
+title: "Nom de mon Projet"                                                                                                                         
+description: "Une description courte qui apparaîtra sur la carte."                                                                                 
+image: "/images/mon-projet.png"                                                                                                                    
+---                                                                                                                                                
+                                                                                                                                                   
+# Contenu détaillé du projet                                                                                                                       
+Ici, vous pouvez écrire tout le contenu détaillé de votre projet en Markdown ou MDX...                                                             
+                                                                                                                                                   
+
+En résumé:                                                                                                                        
+
+Dans votre code lib\markdown.ts, la ligne suivante définit la recherche : const mdxPath = path.join(projectsDir, folder, 'index.mdx')              
+
+ • projectsDir est contents/projects/.                                                                                                             
+ • folder est le nom du sous-dossier que vous venez de créer (ex: projet-alpha).                                                                   
+ • Le code cherche donc spécifiquement le fichier index.mdx à l'intérieur.  
+
 #### En résumé :                                                                                                                 
 
                                                                                          
