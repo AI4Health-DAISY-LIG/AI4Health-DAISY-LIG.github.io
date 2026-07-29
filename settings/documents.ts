@@ -2,32 +2,32 @@ import { type Paths } from '@/lib/pageroutes'
 
 export const Documents: Paths[] = [
   {
-    title: 'News',
-    href: '/news',
+    title: 'Main',
+    href: '/main',
     heading: 'AI4Health@DAISY-LIGLAB',
   },
-  {
-    title: 'Our group',
-    href: '/structure',
-    items: [
-      {
-        title: 'Deep',
-        href: '/deep',
-        items: [
-          {
-            title: 'Deeper',
-            href: '/deeper',
-            items: [
-              {
-                title: 'Even deeper',
-                href: '/even-deeper',
-              },
-            ],
-          },
-        ],
-      },
-    ],
-  },
+  // {
+  //   title: 'Our group',
+  //   href: '/structure',
+  //   items: [
+  //     {
+  //       title: 'Deep',
+  //       href: '/deep',
+  //       items: [
+  //         {
+  //           title: 'Deeper',
+  //           href: '/deeper',
+  //           items: [
+  //             {
+  //               title: 'Even deeper',
+  //               href: '/even-deeper',
+  //             },
+  //           ],
+  //         },
+  //       ],
+  //     },
+  //   ],
+  // },
   {
     spacer: true,
   },
@@ -50,52 +50,52 @@ export const Documents: Paths[] = [
       },
     ],
   },
-  {
-    spacer: true,
-  },
-  {
-    title: 'Markdown',
-    href: '/markdown',
-    heading: 'Components',
-    items: [
-      {
-        title: 'Cards',
-        href: '/cards',
-      },
-      {
-        title: 'Diagrams',
-        href: '/diagrams',
-      },
-      {
-        title: 'Filetree',
-        href: '/filetree',
-      },
-      {
-        title: 'Lists',
-        href: '/lists',
-      },
-      {
-        title: 'Maths',
-        href: '/maths',
-      },
-      {
-        title: 'Notes',
-        href: '/notes',
-      },
-      {
-        title: 'Steps',
-        href: '/steps',
-      },
-      {
-        title: 'Table',
-        href: '/table',
-      },
-      {
-        title: 'Tabs',
-        href: '/tabs',
-      },
-    ],
-  },
+  // {
+  //   spacer: true,
+  // },
+  // {
+  //   title: 'Markdown',
+  //   href: '/markdown',
+  //   heading: 'Components',
+  //   items: [
+  //     {
+  //       title: 'Cards',
+  //       href: '/cards',
+  //     },
+  //     {
+  //       title: 'Diagrams',
+  //       href: '/diagrams',
+  //     },
+  //     {
+  //       title: 'Filetree',
+  //       href: '/filetree',
+  //     },
+  //     {
+  //       title: 'Lists',
+  //       href: '/lists',
+  //     },
+  //     {
+  //       title: 'Maths',
+  //       href: '/maths',
+  //     },
+  //     {
+  //       title: 'Notes',
+  //       href: '/notes',
+  //     },
+  //     {
+  //       title: 'Steps',
+  //       href: '/steps',
+  //     },
+  //     {
+  //       title: 'Table',
+  //       href: '/table',
+  //     },
+  //     {
+  //       title: 'Tabs',
+  //       href: '/tabs',
+  //     },
+  //   ],
+  // },
 ]
 
 
