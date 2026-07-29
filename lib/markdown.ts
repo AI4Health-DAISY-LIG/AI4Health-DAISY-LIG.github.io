@@ -13,7 +13,7 @@ import { type Node } from 'unist'
 import { visit } from 'unist-util-visit'
 
 import { components } from '@/lib/components'
-import { PageRoutes } from '@/lib/pageroutes'
+import { PageRoutes } from '@/..'
 import { GitHubLink } from '@/settings/navigation'
 import { Settings } from '@/types/settings'
 
@@ -106,6 +106,38 @@ export const getDocument = cache(async (slug: string) => {
   }
 })
 
+export const getProjects = async () => {
+  const projectsDir = path.join(process.cwd(), '/contents/projects/')
+  try {
+    // Vérifier si le dossier existe pour éviter une erreur au premier lancement
+    const dirExists = await fs.access(projectsDir).then(() => true).catch(() => false)
+    if (!dirExists) return []
+
+    const folders = await fs.readdir(projectsDir)
+    return await Promise.all(
+      folders.map(async (folder) => {
+        try {
+          const mdxPath = path.join(projectsDir, folder, 'index.mdx')
+          const mdx = await fs.readFile(mdxPath, 'utf-8')
+          const parsed = await parseMdx<any>(mdx)
+          return {
+            title: parsed.frontmatter.title,
+            description: parsed.frontmatter.description,
+            href: `/projects/${folder}`,
+            image: parsed.frontmatter.image,
+          }
+        } catch (error) {
+          console.error(`Error parsing project ${folder}:`, error)
+          return null
+        }
+      }).then((results) => results.filter((p): p is NonNullable<typeof p> => p !== null))
+    )
+  } catch (error) {
+    console.error("Error loading projects:", error)
+    return []
+  }
+}
+
 const headingsRegex = /^(#{2,4})\s(.+)$/gm
 
 export async function getTable(
@@ -157,7 +189,7 @@ export async function getTable(
       href: `#${innerslug(text)}`,
     })
 
-    match = headingsRegex.exec(mdx)
+    match = headings
   }
 
   return extractedHeadings
