@@ -2,34 +2,12 @@ import { type Paths } from '@/lib/pageroutes'
 
 export const Documents: Paths[] = [
   {
-    heading: 'Introduction',
-    title: 'Basic Setup',
-    href: '/basic-setup',
-    items: [
-      {
-        title: 'Installation',
-        href: '/installation',
-      },
-      {
-        title: 'Setup',
-        href: '/setup',
-      },
-      {
-        title: 'Changelog',
-        href: '/changelog',
-      },
-    ],
+    title: 'News',
+    href: '/news',
+    heading: 'AI4Health@DAISY-LIGLAB',
   },
   {
-    spacer: true,
-  },
-  {
-    title: 'Navigation',
-    href: '/navigation',
-    heading: 'Documents',
-  },
-  {
-    title: 'Structure',
+    title: 'Our group',
     href: '/structure',
     items: [
       {
@@ -47,6 +25,28 @@ export const Documents: Paths[] = [
             ],
           },
         ],
+      },
+    ],
+  },
+  {
+    spacer: true,
+  },
+    {
+    heading: 'Tools',
+    title: 'BioMedCAT',
+    href: '/BioMedCAT',
+    items: [
+      {
+        title: 'Installation',
+        href: '/installation',
+      },
+      {
+        title: 'Setup',
+        href: '/setup',
+      },
+      {
+        title: 'Changelog',
+        href: '/changelog',
       },
     ],
   },
@@ -97,3 +97,27 @@ export const Documents: Paths[] = [
     ],
   },
 ]
+
+
+  // {
+  //   title: 'Our group',
+  //   href: '/structure',
+  //   items: [
+  //     {
+  //       title: 'Deep',
+  //       href: '/deep',
+  //       items: [
+  //         {
+  //           title: 'Deeper',
+  //           href: '/deeper',
+  //           items: [
+  //             {
+  //               title: 'Even deeper',
+  //               href: '/even-deeper',
+  //             },
+  //           ],
+  //         },
+  //       ],
+  //     },
+  //   ],
+  // },
