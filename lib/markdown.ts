@@ -3,9 +3,9 @@ import path from 'node:path'
 import { cache } from 'react'
 import { compileMDX } from 'next-mdx-remote/rsc'
 import { type Element, type Text } from 'hast'
-import rehypeAutolintHeadings from 'rehype-autolink-headings'
+import rehypeAutolinkHeadings from 'rehype-autolink-headings'
 import rehypeCodeTitles from 'rehype-code-titles'
-import rehypeKatex from 'rehype-katex'
+import rehypeKatex from 'rehype-katexy'
 import rehypePrism from 'rehype-prism-plus'
 import rehypeSlug from 'rehype-slug'
 import remarkGfm from 'remark-gfm'
@@ -110,7 +110,7 @@ export const getProjects = async () => {
   const projectsDir = path.join(process.cwd(), '/contents/projects/')
   try {
     // Vérifier si le dossier existe pour éviter une erreur au premier lancement
-    const dirExists = await fs.access(projects.cwd, '/contents/projects/').then(() => true).catch(() => false)
+    const dirExists = await fs.access(projectsDir).then(() => true).catch(() => false)
     if (!dirExists) return []
 
     const folders = await fs.readdir(projectsDir)
@@ -189,8 +189,7 @@ export async function getTable(
       href: `#${innerslug(text)}`,
     })
 
-    match = headings// This is a placeholder to ensure I don't break the logic while fixing the syntax error
-    headingsRegex.exec(mdx)
+    match = headingsRegex.exec(mdx)
   }
 
   return extractedHeadings
@@ -224,7 +223,7 @@ const preCopy = () => (tree: Node) => {
     if (node.tagName === 'pre') {
       const [codeEl] = node.children as Element[]
       if (codeEl?.tagName === 'code') {
-        const textNode = code.children?.[0] as Text
+        const textNode = codeEl.children?.[0] as Text
         node.raw = textNode?.value || ''
       }
     }
