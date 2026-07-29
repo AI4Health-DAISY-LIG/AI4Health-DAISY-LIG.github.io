@@ -57,9 +57,7 @@ Built for technical and content-driven projects, this starter kit supports Markd
 
 ---
 
-## Quick Start
-
-### Installation
+## Installation
 
 ```bash
 git clone https://github.com/rubixvi/rubix-documents.git
@@ -80,7 +78,8 @@ pnpm run start
 
 Deploy to GitHubPages for automated builds and hosting.
 
-### Customization
+---
+## Customization
 
 To make this template your own, you don't need to touch the core logic. Simply follow these steps:
 
@@ -110,19 +109,59 @@ Modify the 'Get started' button:
     *   The destination of this link is dynamically generated using `PageRoutes[0].href`.
 
 ### 6. Change the navigation bar (top banner): update links
-Go to :
-'settings\navigation.ts'
+#### Ajouter de nouvelles pages et onglets de documentation (sidebar):                                                                                              
 
----
+Pour ajouter du contenu de type documentation et l'intégrer à la navigation du site, suivez ces deux étapes :                                                  
 
-## Usage
+1. Créer le contenu (La Source)                                                                                                           
 
-Documents is designed to support:
+Le contenu est stocké dans le dossier contents/docs/. Chaque page nécessite son propre dossier contenant un fichier index.mdx.            
 
-- Product documentation
-- Technical manuals
-- Internal guides
-- Business knowledge bases
+ • Action : Créez un dossier contents/docs/[votre-slug]/.                                                                                 
+ • Fichier : Ajoutez un fichier index.mdx à l'intérieur.                                                                                  
+ • Exemple : Pour une page "Projets", créez contents/docs/projects/index.mdx.                                                            
+ 
+ Le système de routagese fait alors automatiquement et dynamiquement 'lib/pageroutes'.ts                                                                                                            
+                                                                                    
+
+2. Configurer la navigation (L'Interface)                                                                                                 
+
+Enfin, pour que l'onglet apparaisse dans votre barre de navigation (top bar ou sidebar), vous devez le lier à la route créée.             
+
+ • Fichier : 'settings/navigation.ts'                                                                                                       
+ • Action : Ajoutez un nouvel élément à l'array Navigations en utilisant la référence de la route définie dans PageRoutes.                
+ • Exemple :                                                                                                                              
+                                                                                                                                          
+   {                                                                                                                                      
+     title: 'Projets',                                                                                                                    
+     href: `/docs${PageRoutes.find(p => p.title === 'Projets')?.href}`,                                                                   
+   }                                                                                                                                      
+                                                                                                                                          
+
+▌ Note : Si vous utilisez des liens externes (ex: GitHub), vous pouvez simplement passer une URL complète dans settings/navigation.ts   
+▌ sans passer par PageRoutes.   
+
+#### Créer une page "Standalone"
+Cette page est indépendante de la doc, elle n'apparaîtra pas dans la sidebar.                                                                                    
+
+Utilisez ceci pour des pages comme "About", "Contact" ou "Projects" qui n'ont pas besoin de structure Markdown/MDX.                                
+
+ 1 Créer le dossier et le fichier dans app/ : Créez un nouveau dossier, par exemple app\projects\page.tsx. C'est ce fichier qui définit l'existence
+   de la route /projects.                                                                                                                          
+ 2 Ajouter l'onglet dans settings\navigation.ts : Ajoutez manuellement le lien vers cette nouvelle route.                                          
+                                                                                                                                                   
+   {                                                                                                                                               
+     title: 'Projects',                                                                                                                            
+     href: '/projects', // L'URL doit correspondre exactement au nom du dossier dans app/                                                          
+   }                                                                                                                                      
+
+#### En résumé :                                                                                                                 
+
+                                                                                         
+ Si vous voulez...     Vous devez créer...                 Et modifier...                
+ ─────────────────────────────────────────────────────────────────────────────────────── 
+ Un onglet "Doc"       Un dossier dans contents/docs/      documents.ts ET navigation.ts 
+ Un onglet "Page Web"  Un dossier et un fichier dans app/  navigation.ts uniquement  
 
 ---
 
