@@ -98,6 +98,21 @@ To use a custom URL (e.g., changing `/installation` to `/guide-setup`), you must
 1. Update the `href` property in `settings/documents.ts`.
 2. Rename the corresponding folder in `contents/docs/[your-slug]/` to match the new slug.
 
+### 5. Change the welcome page
+To change the text, the title or the welcome button style: 
+go to : 
+'app\page.tsx'
+You'll see <h1> and <p> sections so as the configuration of the button class (buttonVariants). 
+
+Modify the 'Get started' button:
+    *   The file `app\page.tsx` contains the `Home` component.
+    *   Inside this component, there is a `<Link>` with the text "Get Started".
+    *   The destination of this link is dynamically generated using `PageRoutes[0].href`.
+
+### 6. Change the navigation bar (top banner): update links
+Go to :
+'settings\navigation.ts'
+
 ---
 
 ## Usage
@@ -154,7 +169,7 @@ This project is licensed under the MIT License. See the [LICENSE](./LICENSE) fil
 
 For support or inquiries:
 
-Vincent Vu — [@rubxvi](https://x.com/rubxvi)
+Vincent Vu — [@rubxvi](https://x.com/rubixvi)
 
 Rubix Studios — [https://rubixstudios.com.au](https://rubixstudios.com.au)
 
