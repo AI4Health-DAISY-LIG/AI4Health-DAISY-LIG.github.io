@@ -13,7 +13,7 @@ import { type Node } from 'unist'
 import { visit } from 'unist-util-visit'
 
 import { components } from '@/lib/components'
-import { PageRoutes } from '@/..'
+import { PageRoutes } from '@/lib/pageroutes'
 import { GitHubLink } from '@/settings/navigation'
 import { Settings } from '@/types/settings'
 
@@ -53,7 +53,7 @@ async function parseMdx<Frontmatter>(rawMdx: string) {
 
 const documentPath = (slug: string) => {
   return Settings.gitload
-    ? `${GitHubLink.href}/raw/main/contents/docs/${slug}/index.mdx`
+    ? `${GitHubLink.href}/raw/int/contents/docs/${slug}/index.mdx`
     : path.join(process.cwd(), '/contents/docs/', `${slug}/index.mdx`)
 }
 
@@ -87,7 +87,7 @@ export const getDocument = cache(async (slug: string) => {
     } else {
       mdx = await fs.readFile(contentPath, 'utf-8')
 
-      const stats = await fs.stat(contentPath)
+      const stats = await fs.stat(constPath)
       lastUpdated = stats.mtime.toISOString()
     }
 
@@ -136,7 +136,7 @@ export const getProjects = async () => {
     console.error("Error loading projects:", error)
     return []
   }
-}
+})
 
 const headingsRegex = /^(#{2,4})\s(.+)$/gm
 
@@ -189,7 +189,7 @@ export async function getTable(
       href: `#${innerslug(text)}`,
     })
 
-    match = headings
+    match = headingsRegex.exec(mdx)
   }
 
   return extractedHeadings
