@@ -1,19 +1,19 @@
-export const url = 'https://rubix-documents.vercel.app'
+export const url = 'https://ai4health-daisy-lig.github.io/'
 export const siteicon = '/icon.png'
 
 export const gtm = 'GTM-XXXXXXX'
 export const gtmconnected = true
 
-export const sitename = 'Documents'
+export const sitename = 'AI4Health@DAISY'
 export const description =
-  'This comprehensive documentation template, crafted with Next.js and available as open-source, delivers a sleek and responsive design, tailored to meet all your project documentation requirements.'
-export const keywords = ['Next.js', 'documentation', 'Rubix Studios', 'open source', 'SEO']
+  'We are dedicated to build and use advanced AI techniques to help scientists, researchers, and medical professionals in understanding biological mechanisms and diseases applying out tools on different scales of experimental and clinical data.'
+export const keywords = ['Bayesian algorithms', 'reinforcement learning', 'deep learning', 'system biology', 'knowledge graphs' ]
 export const urlimage = '/images/og-image.png'
-export const imagealt = 'Rubix Studios Documentation'
-export const twitterhandle = '@RubixStudios'
+export const imagealt = 'AI4Health@DAISY'
+export const twitterhandle = ''
 
-export const companyname = 'Rubix Studios'
-export const companylink = 'https://rubixstudios.com.au'
+export const companyname = 'AI4Health@DAISY, LIGLAB'
+export const companylink = ''
 
 export const branding = true
 export const rightsidebar = true
