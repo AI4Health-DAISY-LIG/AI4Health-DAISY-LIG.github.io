@@ -1,11 +1,11 @@
 import { createReadStream, promises as fs } from 'node:fs'
-import path from 'node:path'
+import path from 'path'
 import { cache } from 'react'
 import { compileMDX } from 'next-mdx-remote/rsc'
 import { type Element, type Text } from 'hast'
 import rehypeAutolinkHeadings from 'rehype-autolink-headings'
 import rehypeCodeTitles from 'rehype-code-titles'
-import rehypeKatex from 'rehype-katexy'
+import rehypeKatex from 'rehype-katex'
 import rehypePrism from 'rehype-prism-plus'
 import rehypeSlug from 'rehype-slug'
 import remarkGfm from 'remark-gfm'
@@ -136,12 +136,13 @@ export const getProjects = async () => {
     console.error("Error loading projects:", error)
     return []
   }
-}
+})
 
 const headingsRegex = /^(#{2,4})\s(.+)$/gm
 
 export async function getTable(
-  slug: string
+  slug:
+string
 ): Promise<{ level: number; text: string; href: string }[]> {
   const extractedHeadings: {
     level: number
