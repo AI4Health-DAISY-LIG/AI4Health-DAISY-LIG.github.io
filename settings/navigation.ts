@@ -7,23 +7,23 @@ export const Navigations = [
   },
   {
     title: 'Projects',
-    href: `/docs${PageRoutes[0].href}`,
+    href: `/projects`,
   },
   {
     title: 'Our group',
-    href: `/docs${PageRoutes[0].href}`,
+    href: `/${PageRoutes.find(p => p.title === 'Our group')?.href}`,
   },
   {
     title: 'Openings',
-    href: `/docs${PageRoutes[0].href}`,
+    href: `/${PageRoutes.find(p => p.title === 'Projets')?.href}`,
   },
   {
     title: 'Meetings',
-    href: `/docs${PageRoutes[0].href}`,
+    href: `/${PageRoutes.find(p => p.title === 'Meetings')?.href}`,
   },
   {
     title: 'Find us',
-    href: `/docs${PageRoutes[0].href}`,
+    href: `/${PageRoutes.find(p => p.title === 'Find us')?.href}`,
   },
   // {
   //   title: 'Rubix',
