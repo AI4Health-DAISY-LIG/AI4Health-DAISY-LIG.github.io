@@ -16,7 +16,7 @@ export default function Home() {
           className={buttonVariants({ className: 'px-6', size: 'lg' })}
           href={`/docs${PageRoutes[0].href}`}
         >
-          Get Started
+          Explore
         </Link>
       </div>
     </section>
