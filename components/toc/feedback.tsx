@@ -1,7 +1,7 @@
 import Link from 'next/link'
 import { LuArrowUpRight } from 'react-icons/lu'
 
-import { GitHubLink } from '@/settings/navigation'
+import { GitHubLink } from '@/settings/navigation-constants'
 
 interface FeedbackProps {
   slug: string
