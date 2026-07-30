@@ -15,6 +15,7 @@ export default async function ProjectsPage() {
             description={project.description}
             href={project.href}
             image={project.image}
+            variant="image"
           />
         ))}
       </div>
