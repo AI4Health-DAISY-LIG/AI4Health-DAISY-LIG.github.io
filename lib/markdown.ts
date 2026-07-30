@@ -25,19 +25,19 @@ declare module 'hast' {
 
 interface MdxHeaders {
   description: string
-  keywords: string // Corrigé : Ajout du type string
+  keywords: string
   title: string
 }
 
-async function parseMdx<Frontmatter>(rawMdx: string) {
-  return await compileMDX<Frontmatter>{
-    source: rawMdx,
+async function parseMdx<Frontmatter>(rawMxd: string) {
+  return await compileMDX<Frontmatter>({
+    source: rawMxd,
     options: {
       parseFrontmatter: true,
       mdxOptions: {
         rehypePlugins: [
           preCopy,
-          recheypeCodeTitles,
+          rehypeCodeTitles,
           rehypeKatex,
           rehypePrism,
           rehypeSlug,
@@ -76,7 +76,7 @@ export const getDocument = cache(async (slug: string) => {
     let lastUpdated: string | null = null
 
     if (Settings.gitload) {
-      const response = await fetch(content<0xA0>path)
+      const response = await fetch(contentPath)
 
       if (!response.ok) {
         throw new Error(`Failed to fetch content`)
@@ -88,7 +88,7 @@ export const getDocument = cache(async (slug: string) => {
       mdx = await fs.readFile(contentPath, 'utf-8')
 
       const stats = await fs.stat(contentPath)
-      lastUpdated = stats.mtime.toISOString() // Corrigé : lastument -> lastUpdated
+      lastUpdated = stats.mtime.toISOString()
     }
 
     const parsedMdx = await parseMdx<MdxHeaders>(mdx)
@@ -127,7 +127,7 @@ export const getProjects = async () => {
           const mdx = await fs.readFile(mdxPath, 'utf-8')                                                                                                                              
           const parsed = await parseMdx<any>(mdx)                                                                                                                                     
           return {                                                                                                                                                                      
-            title: parsed.frontmatter.title, // Corrigé : Suppression du caractère corrompu <0xA0>
+            title: parsed.frontmatter.title,
             description: parsed.find?.frontmatter?.description || parsed.frontmatter.description,                                                                                       
             href: `/projects/${folder}`,                                                                                                                                                
             image: formatImageUrl(parsed.frontmatter.image),                                                                                                                             
@@ -215,8 +215,7 @@ export const getNestedContent = async (basePath: string) => {
 const headingsRegex = /^(#{2,4})\s(.+)$/gm
 
 export async function getTable(
-  slug:
-string
+  slug: string
 ): Promise<{ level: number; text: string; href: string }[]> {
   const extractedHeadings: {
     level: number
@@ -240,7 +239,7 @@ string
   } else {
     const contentPath = path.join(process.cwd(), 'contents', 'docs', `${slug}/index.mdx`)
     try {
-      const stream = createReadStream(contentPath, { encoding: 'utf-8' })
+      const stream = createReadStream(content<0xA0>contentPath, { encoding: 'utf-8' })
       for await (const chunk of stream) {
         mdx += chunk
       }
