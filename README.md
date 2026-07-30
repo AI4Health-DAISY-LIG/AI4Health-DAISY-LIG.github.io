@@ -1,61 +1,8 @@
-# Documents
+# AI4Health @DAISY, LIGLAB website
 
-Documents is a modern documentation starter kit built with **Next.js**, **React**, **Tailwind CSS**, and **TypeScript**. Designed for businesses, product teams, and technical writers, it provides a scalable and efficient foundation for building documentation websites, product manuals, and knowledge bases.
-
-> **Demo**: [https://rubix-documents.vercel.app](https://rubix-documents.vercel.app)
-
-[![License](https://img.shields.io/badge/license-MIT-green.svg)](LICENSE)
-[![Top Language](https://img.shields.io/github/languages/top/rubixvi/rubix-documents)](https://img.shields.io/github/languages/top/rubixvi/rubix-documents)
-
-![GitHub commit activity](https://img.shields.io/github/commit-activity/m/rubixvi/rubix-documents)
-[![Last Commit](https://img.shields.io/github/last-commit/rubixvi/rubix-documents)](https://img.shields.io/github/last-commit/rubixvi/rubix-documents)
-[![GitHub issues](https://img.shields.io/github/issues/rubixvi/rubix-documents)](https://img.shields.io/github/issues/rubixvi/rubix-documents)
-[![GitHub pull requests](https://img.shields.io/github/pulls/rubixvi/rubix-documents)](https://img.shields.io/github/pulls/rubixvi/rubix-documents)
-
-[![GitHub stars](https://img.shields.io/github/stars/rubix-documents)](https://img.shields.io/github/stars/rubixvi/rubix-documents)
-[![GitHub forks](https://img.shields.io/github/forks/rubix-documents)](https://img.shields.io/github/forks/rubixvi/rubix-documents)
-[![GitHub repo size](https://img.shields.io/github/repo-size/rubix-documents)](https://img.shields.io/github/repo-size/rubixvi/rubix-documents)
+Our website uses Documents: a modern documentation starter kit built with **Next.js**, **React**, **Tailwind CSS**, and **TypeScript**. Designed for businesses, product teams, and technical writers, it provides a scalable and efficient foundation for building documentation websites, product manuals, and knowledge bases.
 
 
----
-
-## Overview
-
-Documents enables businesses to deliver clear, structured, and accessible product documentation — with a focus on performance, usability, and maintainability.
-
-Built for technical and content-driven projects, this starter kit supports Markdown (MDX), React components, and a flexible content architecture designed for scale.
-
----
-
-## Features
-
-### Content Management
-
-- MDX support (Markdown with React components)
-- Reusable custom components
-- Mermaid.js for diagrams and flowcharts
-- Tables and LaTeX math support
-
-### Navigation & Structure
-
-- Multi-level navigation
-- Auto-generated table of contents
-- Content pagination
-- Code snippet switcher with copy functionality
-
-### Development Experience
-
-- Syntax highlighting with theme support
-- Enhanced code blocks with titles and line highlighting
-- Built-in light/dark mode with auto-detection
-- SEO-ready with dynamic meta tags
-
-### Search & Future Enhancements
-
-- Fuzzy search with term highlighting
-- Planned: AI-powered knowledgebase tools
-
----
 
 ## Installation
 
@@ -178,7 +125,7 @@ votre-projet/
 Ce que doit contenir le fichier index.mdx :                                                                                                        
 
 Pour que la carte (Card) s'affiche correctement avec les bonnes informations, votre fichier index.mdx doit impérativement contenir le frontmatter  
-suivant au début du fichier :                                                                                                                      
+suivant au début du fichier.                                                                                                                     
 
                                                                                                                                                    
 ---                                                                                                                                                
