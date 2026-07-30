@@ -5,7 +5,7 @@ import { compileMDX } from 'next-mdx-remote/rsc'
 import { type Element, type Text } from 'hast'
 import rehypeAutolinkHeadings from 'rehype-autolink-headings'
 import rehypeCodeTitles from 'rehype-code-titles'
-import rehypeKatex from 'rehype-katex'
+import rehypeKatex from 'rehype-kate  '
 import rehypePrism from 'rehype-prism-plus'
 import rehypeSlug from 'rehype-slug'
 import remarkGfm from 'remark-gfm'
@@ -25,7 +25,7 @@ declare module 'hast' {
 
 interface MdxHeaders {
   description: string
-  keywords:
+  keywords: string // Corrigé : Ajout du type string
   title: string
 }
 
@@ -54,7 +54,7 @@ async function parseMdx<Frontmatter>(rawMdx: string) {
 const documentPath = (slug: string) => {
   return Settings.gitload
     ? `${GitHubLink.href}/raw/int/contents/docs/${slug}/index.mdx`
-    : path.join(process.cwd(), '/contents/docs/', `${slug}/index.mdx`)
+    : path.join(process.cwd(), 'contents', 'docs', `${slug}/index.mdx`)
 }
 
 const getDocumentPath = (() => {
@@ -88,7 +88,7 @@ export const getDocument = cache(async (slug: string) => {
       mdx = await fs.readFile(contentPath, 'utf-8')
 
       const stats = await fs.stat(contentPath)
-      lastument = stats.mtime.toISOString()
+      lastUpdated = stats.mtime.toISOString() // Corrigé : lastument -> lastUpdated
     }
 
     const parsedMdx = await parseMdx<MdxHeaders>(mdx)
@@ -108,47 +108,43 @@ export const getDocument = cache(async (slug: string) => {
 
 function formatImageUrl(url: string): string {                                                                                                                                                
   if (!url) return '';                                                                                                                                                                        
-  // Supprime 'public/' si le chemin commence par ce préfixe                                                                                                                                  
   let cleanUrl = url.startsWith('public/') ? url.replace('public/', '') : url;                                                                                                                
-  // Assure que le chemin commence par un slash '/'                                                                                                                                           
   return cleanUrl.startsWith('/') ? cleanUrl : `/${cleanUrl}`;                                                                                                                                
 }
 
 export const getProjects = async () => {                                                                                                           
-  const projectsDir = path.join(process.cwd(), '/contents/projects/')                                                                                                             
-  try {                                                                                                                                            
+  const projectsDir = path.join(process.cwd(), 'contents', 'projects')                                                                                                             
+  try {                                                                                                                                                                                                
     const dirExists = await fs.access(projectsDir).then(() => true).catch(() => false)                                                             
-    if (!dirExists) return []                                                                                                                      
-                                                                                                                                                   
-    const folders = await fs.readdir(projectsDir)                                                                                                  
-                                                                                                                                                   
-    // 1. Wait promises                                                                                                              
-    const results = await Promise.all(                                                                                                             
-      folders.map(async (folder) => {                                                                                                              
-        try {                                                                                                                                      
-          const mdxPath = path.join(projectsDir, folder, 'index.mdx')                                                                              
-          const mdx = await fs.readFile(mdxPath, 'utf-8')                                                                                          
-          const parsed = await parseMdx<any>(mdx)                                                                                                  
-          return {                                                                                                                                 
-            title: parsed.front<0xA0>frontmatter.title,                                                                                                       
-            description: parsed.frontmatter.description,                                                                                           
-            href: `/projects/${folder}`,                                                                                                           
-            image: formatImageUrl(parsed.frontmatter.image),                                                                                                       
-          }                                                                                                                                        
-        } catch (error) {                                                                                                                          
-          console.error(`Error parsing project ${folder}:`, error)                                                                                 
-          return null                                                                                                                              
-        }                                                                                                                                          
-      })                                                                                                                                           
-    )                                                                                                                                              
-                                                                                                                                                   
-    // 2. Filter results                                                                                                                                
-    return results.filter((p): p is NonNullable<typeof p> => p !== null)                                                                           
-                                                                                                                                                   
-  } catch (error) {                                                                                                                                
-    console.error("Error loading projects:", error)                                                                                                
-    return []                                                                                                                                      
-  }                                                                                                                                                
+    if (!dirExists) return []                                                                                                                                                     
+                                                                                                                                                                                                    
+    const folders = await fs.readdir(projectsDir)                                                                                                                                        
+                                                                                                                                                                                                    
+    const results = await Promise.all(                                                                                                                                                   
+      folders.map(async (folder) => {                                                                                                                                                  
+        try {                                                                                                                                                                           
+          const mdxPath = path.join(projectsDir, folder, 'index.mdx')                                                                                                                 
+          const mdx = await fs.readFile(mdxPath, 'utf-8')                                                                                                                              
+          const parsed = await parseMdx<any>(mdx)                                                                                                                                     
+          return {                                                                                                                                                                      
+            title: parsed.frontmatter.title, // Corrigé : Suppression du caractère corrompu <0xA0>
+            description: parsed.find?.frontmatter?.description || parsed.frontmatter.description,                                                                                       
+            href: `/projects/${folder}`,                                                                                                                                                
+            image: formatImageUrl(parsed.frontmatter.image),                                                                                                                             
+          }                                                                                                                                                                             
+        } catch (error) {                                                                                                                                                             
+          console.error(`Error parsing project ${folder}:`, error)                                                                                                                    
+          return null                                                                                                                                                                  
+        }                                                                                                                                                                             
+      })                                                                                                                                                                              
+    )                                                                                                                                                                               
+                                                                                                                                                                                                    
+    return results.filter((p): p is NonNullable<typeof p> => p !== null)                                                                                                          
+                                                                                                                                                                                                    
+  } catch (error) {                                                                                                                                                             
+    console.error("Error loading projects:", error)                                                                                                                               
+    return []                                                                                                                                                                     
+  }                                                                                                                                                                               
 }
 
 export const getNestedContent = async (basePath: string) => {
@@ -156,7 +152,6 @@ export const getNestedContent = async (basePath: string) => {
   const generalItems: any[] = []
 
   try {
-    // On s'assure d'utiliser le chemin absolu correct
     const absoluteBasePath = path.isAbsolute(basePath) 
       ? basePath 
       : path.join(process.cwd(), basePath)
@@ -167,7 +162,6 @@ export const getNestedContent = async (basePath: string) => {
       const entryPath = path.join(absoluteBasePath, entry)
       const stats = await fs.stat(entryPath)
 
-      // Cas 1 : Un fichier index.mdx à la racine du dossier (ex: contents/our-group/index.mdx)
       if (stats.isFile() && entry === 'index.mdx') {
         const mdx = await fs.readFile(entryPath, 'utf-8')
         const parsed = await parseMdx<any>(mdx)
@@ -175,16 +169,14 @@ export const getNestedContent = async (basePath: string) => {
           title: parsed.frontmatter.title,
           description: parsed.frontmatter.description,
           image: formatImageUrl(parsed.frontmatter.image),
-          href: `/${path.basename(absoluteBasePath.split('contents')[0].replace('/', ''))}/`, // Ajustement du lien
+          href: `/${path.basename(absoluteBasePath.split('contents')[0].replace('/', ''))}/`,
         })
       } 
-      // Cas 2 : Un sous-dossier qui représente une Section (ex: contents/our-group/members)
       else if (stats.isDirectory()) {
         const sectionItems: any[] = []
         const subEntries = await fs.readdir(entryPath)
 
         for (const subEntry of subEntries) {
-          // On cherche un dossier qui contient son propre index.mdx (ex: members/member1/index.mdx)
           const itemPath = path.join(entryPath, subEntry, 'index.mdx')
           
           try {
@@ -196,12 +188,10 @@ export const getNestedContent = async (basePath: string) => {
                 title: parsed.frontmatter.title,
                 description: parsed.frontmatter.description,
                 image: formatImageUrl(parsed.frontmatter.image),
-                // Construction du lien dynamique : /nom-page/nom-section/nom-item
                 href: `/${path.basename(absoluteBasePath.split('contents')[0].replace('/', ''))}/${entry}/${subEntry}`,
               })
             }
           } catch (e) {
-            // On ignore les dossiers qui ne sont pas des items valides
           }
         }
 
@@ -211,7 +201,6 @@ export const getNestedContent = async (basePath: string) => {
       }
     }
 
-    // Si on a trouvé des éléments à la racine, on les met dans une section "General"
     if (generalItems.length > 0) {
       sections.push({ section: 'General', items: generalItems })
     }
@@ -249,7 +238,7 @@ string
       return []
     }
   } else {
-    const contentPath = path.join(process.cwd(), '/contents/docs/', `${slug}/index.mdx`)
+    const contentPath = path.join(process.cwd(), 'contents', 'docs', `${slug}/index.mdx`)
     try {
       const stream = createReadStream(contentPath, { encoding: 'utf-8' })
       for await (const chunk of stream) {
