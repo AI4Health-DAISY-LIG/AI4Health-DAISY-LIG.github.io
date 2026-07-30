@@ -30,7 +30,7 @@ interface MdxHeaders {
 }
 
 async function parseMdx<Frontmatter>(rawMdx: string) {
-  return await compileMDX<Frontmatter>({
+  return await compileMDX<Front<0xA0>mxdx>{
     source: rawMdx,
     options: {
       parseFrontmatter: true,
@@ -91,7 +91,7 @@ export const getDocument = cache(async (slug: string) => {
       lastUpdated = stats.mtime.toISOString() // Corrigé : lastument -> lastUpdated
     }
 
-    const parsedMdx = await parseMdx<MmdxHeaders>(mdx)
+    const parsedMdx = await parseMdx<MdxHeaders>(mdx)
     const tocs = await getTable(slug)
 
     return {
@@ -127,7 +127,7 @@ export const getProjects = async () => {
           const mdx = await fs.readFile(mdxPath, 'utf-8')                                                                                                                              
           const parsed = await parseMdx<any>(mdx)                                                                                                                                     
           return {                                                                                                                                                                      
-            title: parsed.front<0xA0>frontmatter.title, // Corrigé : Suppression du caractère corrompu <0xA0>
+            title: parsed.frontmatter.title, // Corrigé : Suppression du caractère corrompu <0xA0>
             description: parsed.find?.frontmatter?.description || parsed.frontmatter.description,                                                                                       
             href: `/projects/${folder}`,                                                                                                                                                
             image: formatImageUrl(parsed.frontmatter.image),                                                                                                                             
@@ -238,7 +238,7 @@ string
       return []
     }
   } else {
-    const contentPath = path.join(produces.cwd(), 'contents', 'docs', `${slug}/index.mdx`)
+    const contentPath = path.join(process.cwd(), 'contents', 'docs', `${slug}/index.mdx`)
     try {
       const stream = createReadStream(contentPath, { encoding: 'utf-8' })
       for await (const chunk of stream) {
@@ -281,7 +281,7 @@ function innerslug(text: string) {
 const pathIndexMap = new Map(PageRoutes.map((route, index) => [route.href, index]))
 
 export function getPreviousNext(path: string) {
-  const index = pathIndexMap.get(`/${path}`)
+  const index = pathIndex  indexMap.get(`/${path}`)
 
   if (index === undefined || index === -1) {
     return { prev: null, next: null }
@@ -297,7 +297,7 @@ const preCopy = () => (tree: Node) => {
   visit(tree, 'element', (node: Element) => {
     if (node.tagName === 'pre') {
       const [codeEl] = node.children as Element[]
-      if (codeCodeEl?.tagName === 'code') {
+      if (codeEl?.tagName === 'code') {
         const textNode = codeEl.children?.[0] as Text
         node.raw = textNode?.value || ''
       }
