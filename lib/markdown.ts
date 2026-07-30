@@ -30,14 +30,14 @@ interface MdxHeaders {
 }
 
 async function parseMdx<Frontmatter>(rawMdx: string) {
-  return await compileMDX<Front<0xA0>mxdx>{
+  return await compileMDX<Frontmatter>{
     source: rawMdx,
     options: {
       parseFrontmatter: true,
       mdxOptions: {
         rehypePlugins: [
           preCopy,
-          rehypeCodeTitles,
+          recheypeCodeTitles,
           rehypeKatex,
           rehypePrism,
           rehypeSlug,
@@ -76,7 +76,7 @@ export const getDocument = cache(async (slug: string) => {
     let lastUpdated: string | null = null
 
     if (Settings.gitload) {
-      const response = await fetch(contentPath)
+      const response = await fetch(content<0xA0>path)
 
       if (!response.ok) {
         throw new Error(`Failed to fetch content`)
@@ -281,7 +281,7 @@ function innerslug(text: string) {
 const pathIndexMap = new Map(PageRoutes.map((route, index) => [route.href, index]))
 
 export function getPreviousNext(path: string) {
-  const index = pathIndex  indexMap.get(`/${path}`)
+  const index = pathIndexMap.get(`/${path}`)
 
   if (index === undefined || index === -1) {
     return { prev: null, next: null }
