@@ -14,7 +14,7 @@ import { visit } from 'unist-util-visit'
 
 import { components } from '@/lib/components'
 import { PageRoutes } from '@/lib/pageroutes'
-import { GitHubLink } from '@/settings/navigation'
+import { GitHubLink } from '@/settings/navigation-constants'
 import { Settings } from '@/types/settings'
 
 declare module 'hast' {
