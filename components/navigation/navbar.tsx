@@ -9,17 +9,27 @@ import { Search } from '@/components/navigation/search'
 import { SheetLeft } from '@/components/sidebar'
 import { buttonVariants } from '@/components/ui/button'
 import { SheetClose } from '@/components/ui/sheet'
-import { ModeToggle } from '@/components/ui/theme-toggle'
-import { GitHubLink, Navigations } from '@/settings/navigation'
+import { ModeToggle } from '@/components/ui/theme-toogle'
+import { GitHubLink } from '@/settings/navigation'
 
-export function Navbar() {
+interface NavItem {
+  title: string
+  href: string
+  external?: boolean
+}
+
+interface NavbarProps {
+  navLinks: NavItem[]
+}
+
+export function Navbar({ navLinks }: NavbarProps) {
   return (
     <nav className="bg-opacity-5 sticky top-0 z-50 mx-auto flex h-16 w-full items-center justify-between border-b p-1 px-2 backdrop-blur-xl backdrop-filter sm:p-3 md:gap-2 md:px-4">
       <div className="flex items-center gap-5">
         <SheetLeft />
         <Logo />
         <div className="hidden items-center gap-5 text-sm font-medium text-muted-foreground md:flex">
-          <NavMenu />
+          <NavMenu navLinks={navLinks} />
         </div>
       </div>
 
@@ -45,10 +55,10 @@ export function Navbar() {
   )
 }
 
-export function NavMenu({ isSheet = false }) {
+export function NavMenu({ isSheet = false, navLinks }: NavbarProps & { isSheet?: boolean }) {
   return (
     <>
-      {Navigations.map((item) => {
+      {navLinks.map((item) => {
         const Comp = (
           <Anchor
             absolute

@@ -7,6 +7,7 @@ import { Footer } from '@/components/navigation/footer'
 import { Navbar } from '@/components/navigation/navbar'
 import { Providers } from '@/providers'
 import { Settings } from '@/types/settings'
+import { getNavigations } from '@/settings/navigation'
 
 import '@/styles/globals.css'
 
@@ -52,13 +53,17 @@ export const metadata: Metadata = {
   },
 }
 
-export default function RootLayout({ children }: Readonly<{ children: ReactNode }>) {
+export default async function RootLayout({ children }: Readonly<{ children: ReactNode }>) {
+  const navLinks = await getNavigations();
+
   return (
     <html data-scroll-behavior="smooth" lang="en" suppressHydrationWarning>
-      {Settings.gtmconnected && <GoogleTagManager gtmId={Settings.gtm} />}
+      {Settings.gtmconnected && <GoogleTag
+        gtmId={Settings.gtm} 
+      />}
       <body className={`${inter.variable} font-regular antialiased`}>
         <Providers>
-          <Navbar />
+          <Navbar navLinks={navLinks} />
           <main className="h-auto px-5 sm:px-8">{children}</main>
           <Footer />
         </Providers>

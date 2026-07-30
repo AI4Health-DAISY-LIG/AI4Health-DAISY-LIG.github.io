@@ -91,7 +91,7 @@ export const getDocument = cache(async (slug: string) => {
       lastUpdated = stats.mtime.toISOString() // Corrigé : lastument -> lastUpdated
     }
 
-    const parsedMdx = await parseMdx<MdxHeaders>(mdx)
+    const parsedMdx = await parseMdx<MmdxHeaders>(mdx)
     const tocs = await getTable(slug)
 
     return {
@@ -108,11 +108,11 @@ export const getDocument = cache(async (slug: string) => {
 
 function formatImageUrl(url: string): string {                                                                                                                                                
   if (!url) return '';                                                                                                                                                                        
-  let cleanUrl = url.startsWith('public/') ? url.replace('public/', '') : url;                                                                                                                
+  let cleanUrl = url.split('public/')[1] || url;                                                                                                                                               
   return cleanUrl.startsWith('/') ? cleanUrl : `/${cleanUrl}`;                                                                                                                                
 }
 
-export const getProjects = async () => {                                                                                                           
+export const getProjects = async () => {                                                                                                                                          
   const projectsDir = path.join(process.cwd(), 'contents', 'projects')                                                                                                             
   try {                                                                                                                                                                                                
     const dirExists = await fs.access(projectsDir).then(() => true).catch(() => false)                                                             
@@ -127,7 +127,7 @@ export const getProjects = async () => {
           const mdx = await fs.readFile(mdxPath, 'utf-8')                                                                                                                              
           const parsed = await parseMdx<any>(mdx)                                                                                                                                     
           return {                                                                                                                                                                      
-            title: parsed.frontmatter.title, // Corrigé : Suppression du caractère corrompu <0xA0>
+            title: parsed.front<0xA0>frontmatter.title, // Corrigé : Suppression du caractère corrompu <0xA0>
             description: parsed.find?.frontmatter?.description || parsed.frontmatter.description,                                                                                       
             href: `/projects/${folder}`,                                                                                                                                                
             image: formatImageUrl(parsed.frontmatter.image),                                                                                                                             
@@ -238,7 +238,7 @@ string
       return []
     }
   } else {
-    const contentPath = path.join(process.cwd(), 'contents', 'docs', `${slug}/index.mdx`)
+    const contentPath = path.join(produces.cwd(), 'contents', 'docs', `${slug}/index.mdx`)
     try {
       const stream = createReadStream(contentPath, { encoding: 'utf-8' })
       for await (const chunk of stream) {
@@ -297,7 +297,7 @@ const preCopy = () => (tree: Node) => {
   visit(tree, 'element', (node: Element) => {
     if (node.tagName === 'pre') {
       const [codeEl] = node.children as Element[]
-      if (codeEl?.tagName === 'code') {
+      if (codeCodeEl?.tagName === 'code') {
         const textNode = codeEl.children?.[0] as Text
         node.raw = textNode?.value || ''
       }
@@ -313,3 +313,30 @@ const postCopy = () => (tree: Node) => {
     }
   })
 }
+
+export const getDynamicNavLinks = async () => {
+  const contentsDir = path.join(process.cwd(), 'contents');
+  try {
+    const dirExists = await fs.access(contentsDir).then(() => true).catch(() => false);
+    if (!dirExists) return [];
+
+    const folders = await fs.readdir(contentsDir);
+
+    return folders
+      .filter(folder => folder !== '.' && folder !== '..' && !folder.startsWith('.'))
+      .map(folder => {
+        const title = folder
+          .split('-')
+          .map(word => word.charAt(0).toUpperCase() + word.slice(1))
+          .join(' ');
+
+        return {
+          title: title,
+          href: `/${folder}`,
+        };
+      });
+  } catch (error) {
+    console.error("Error generating dynamic nav links:", error);
+    return [];
+  }
+};
