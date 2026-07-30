@@ -1,5 +1,6 @@
 import { PageRoutes } from '@/lib/pageroutes'
 import { getDynamicNavLinks } from '@/lib/markdown'
+import { GitHubLink } from './navigation-constants'
 
 export const getNavigations = async () => {
   const dynamicLinks = await getDynamicNavLinks();
@@ -32,8 +33,4 @@ export const getNavigations = async () => {
   ];
 
   return [...staticLinks, ...dynamicLinks];
-}
-
-export const GitHubLink = {
-  href: 'https://github.com/AI4Health-DAISY-LIG',
 }
