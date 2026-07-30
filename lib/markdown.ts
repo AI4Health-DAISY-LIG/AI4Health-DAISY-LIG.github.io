@@ -25,7 +25,7 @@ declare module 'hast' {
 
 interface MdxHeaders {
   description: string
-  keywords: string
+  keywords:
   title: string
 }
 
@@ -88,7 +88,7 @@ export const getDocument = cache(async (slug: string) => {
       mdx = await fs.readFile(contentPath, 'utf-8')
 
       const stats = await fs.stat(contentPath)
-      lastUpdated = stats.mtime.toISOString()
+      lastument = stats.mtime.toISOString()
     }
 
     const parsedMdx = await parseMdx<MdxHeaders>(mdx)
@@ -115,14 +115,14 @@ function formatImageUrl(url: string): string {
 }
 
 export const getProjects = async () => {                                                                                                           
-  const projectsDir = path.join(process.cwd(), '/contents/projects/')                                                                              
+  const projectsDir = path.join(process.cwd(), '/contents/projects/')                                                                                                             
   try {                                                                                                                                            
     const dirExists = await fs.access(projectsDir).then(() => true).catch(() => false)                                                             
     if (!dirExists) return []                                                                                                                      
                                                                                                                                                    
     const folders = await fs.readdir(projectsDir)                                                                                                  
                                                                                                                                                    
-    // 1. Wait promises                                                                               
+    // 1. Wait promises                                                                                                              
     const results = await Promise.all(                                                                                                             
       folders.map(async (folder) => {                                                                                                              
         try {                                                                                                                                      
@@ -130,7 +130,7 @@ export const getProjects = async () => {
           const mdx = await fs.readFile(mdxPath, 'utf-8')                                                                                          
           const parsed = await parseMdx<any>(mdx)                                                                                                  
           return {                                                                                                                                 
-            title: parsed.frontmatter.title,                                                                                                       
+            title: parsed.front<0xA0>frontmatter.title,                                                                                                       
             description: parsed.frontmatter.description,                                                                                           
             href: `/projects/${folder}`,                                                                                                           
             image: formatImageUrl(parsed.frontmatter.image),                                                                                                       
@@ -142,13 +142,85 @@ export const getProjects = async () => {
       })                                                                                                                                           
     )                                                                                                                                              
                                                                                                                                                    
-    // 2. Filter results                                                                                                 
+    // 2. Filter results                                                                                                                                
     return results.filter((p): p is NonNullable<typeof p> => p !== null)                                                                           
                                                                                                                                                    
   } catch (error) {                                                                                                                                
     console.error("Error loading projects:", error)                                                                                                
     return []                                                                                                                                      
   }                                                                                                                                                
+}
+
+export const getNestedContent = async (basePath: string) => {
+  const sections: Array<{ section: string; items: any[] }> = []
+  const generalItems: any[] = []
+
+  try {
+    // On s'assure d'utiliser le chemin absolu correct
+    const absoluteBasePath = path.isAbsolute(basePath) 
+      ? basePath 
+      : path.join(process.cwd(), basePath)
+
+    const entries = await fs.readdir(absoluteBasePath)
+
+    for (const entry of entries) {
+      const entryPath = path.join(absoluteBasePath, entry)
+      const stats = await fs.stat(entryPath)
+
+      // Cas 1 : Un fichier index.mdx à la racine du dossier (ex: contents/our-group/index.mdx)
+      if (stats.isFile() && entry === 'index.mdx') {
+        const mdx = await fs.readFile(entryPath, 'utf-8')
+        const parsed = await parseMdx<any>(mdx)
+        generalItems.push({
+          title: parsed.frontmatter.title,
+          description: parsed.frontmatter.description,
+          image: formatImageUrl(parsed.frontmatter.image),
+          href: `/${path.basename(absoluteBasePath.split('contents')[0].replace('/', ''))}/`, // Ajustement du lien
+        })
+      } 
+      // Cas 2 : Un sous-dossier qui représente une Section (ex: contents/our-group/members)
+      else if (stats.isDirectory()) {
+        const sectionItems: any[] = []
+        const subEntries = await fs.readdir(entryPath)
+
+        for (const subEntry of subEntries) {
+          // On cherche un dossier qui contient son propre index.mdx (ex: members/member1/index.mdx)
+          const itemPath = path.join(entryPath, subEntry, 'index.mdx')
+          
+          try {
+            if (await fs.access(itemPath).then(() => true).catch(() => false)) {
+              const mdx = await fs.readFile(itemPath, 'utf-8')
+              const parsed = await parseMdx<any>(mdx)
+              
+              sectionItems.push({
+                title: parsed.frontmatter.title,
+                description: parsed.frontmatter.description,
+                image: formatImageUrl(parsed.frontmatter.image),
+                // Construction du lien dynamique : /nom-page/nom-section/nom-item
+                href: `/${path.basename(absoluteBasePath.split('contents')[0].replace('/', ''))}/${entry}/${subEntry}`,
+              })
+            }
+          } catch (e) {
+            // On ignore les dossiers qui ne sont pas des items valides
+          }
+        }
+
+        if (sectionItems.length > 0) {
+          sections.push({ section: entry, items: sectionItems })
+        }
+      }
+    }
+
+    // Si on a trouvé des éléments à la racine, on les met dans une section "General"
+    if (generalItems.length > 0) {
+      sections.push({ section: 'General', items: generalItems })
+    }
+
+    return sections
+  } catch (error) {
+    console.error("Error in getNestedContent:", error)
+    return []
+  }
 }
 
 const headingsRegex = /^(#{2,4})\s(.+)$/gm
