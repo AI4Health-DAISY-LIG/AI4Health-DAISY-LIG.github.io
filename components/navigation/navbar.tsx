@@ -9,7 +9,7 @@ import { Search } from '@/components/navigation/search'
 import { SheetLeft } from '@/components/sidebar'
 import { buttonVariants } from '@/components/ui/button'
 import { SheetClose } from '@/components/ui/sheet'
-import { ModeToggle } from '@/components/ui/theme-toogle'
+import { ModeToggle } from '@/components/ui/theme-toggle'
 import { GitHubLink } from '@/settings/navigation'
 
 interface NavItem {

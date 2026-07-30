@@ -1,4 +1,4 @@
-import { PageRoutes } from '@/lib/pagerute'
+import { PageRoutes } from '@/lib/pageroutes'
 import { getDynamicNavLinks } from '@/lib/markdown'
 
 export const getNavigations = async () => {
