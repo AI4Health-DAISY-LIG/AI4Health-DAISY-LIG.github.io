@@ -106,6 +106,14 @@ export const getDocument = cache(async (slug: string) => {
   }
 })
 
+function formatImageUrl(url: string): string {                                                                                                                                                
+  if (!url) return '';                                                                                                                                                                        
+  // Supprime 'public/' si le chemin commence par ce préfixe                                                                                                                                  
+  let cleanUrl = url.startsWith('public/') ? url.replace('public/', '') : url;                                                                                                                
+  // Assure que le chemin commence par un slash '/'                                                                                                                                           
+  return cleanUrl.startsWith('/') ? cleanUrl : `/${cleanUrl}`;                                                                                                                                
+}
+
 export const getProjects = async () => {                                                                                                           
   const projectsDir = path.join(process.cwd(), '/contents/projects/')                                                                              
   try {                                                                                                                                            
@@ -125,7 +133,7 @@ export const getProjects = async () => {
             title: parsed.frontmatter.title,                                                                                                       
             description: parsed.frontmatter.description,                                                                                           
             href: `/projects/${folder}`,                                                                                                           
-            image: parsed.frontmatter.image,                                                                                                       
+            image: formatImageUrl(parsed.frontmatter.image),                                                                                                       
           }                                                                                                                                        
         } catch (error) {                                                                                                                          
           console.error(`Error parsing project ${folder}:`, error)                                                                                 
