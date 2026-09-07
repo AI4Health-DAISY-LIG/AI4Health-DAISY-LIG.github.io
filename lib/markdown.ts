@@ -1,7 +1,9 @@
 import { createReadStream, promises as fs } from 'node:fs'
 import path from 'path'
 import { cache } from 'react'
+import { type ReactElement } from 'react'
 import { compileMDX } from 'next-mdx-remote/rsc'
+import matter from 'gray-matter'
 import { type Element, type Text } from 'hast'
 import rehypeAutolinkHeadings from 'rehype-autolink-headings'
 import rehypeCodeTitles from 'rehype-code-titles'
@@ -147,14 +149,69 @@ export const getProjects = async () => {
   }                                                                                                                                                                               
 }
 
+export const getProject = cache(async (slug: string) => {
+  try {
+    const mdxPath = path.join(process.cwd(), 'contents', 'projects', slug, 'index.mdx')
+    const mdx = await fs.readFile(mdxPath, 'utf-8')
+    const parsed = await parseMdx<any>(mdx)
+    return { frontmatter: parsed.frontmatter, content: parsed.content }
+  } catch (error) {
+    console.error(`Error parsing project ${slug}:`, error)
+    return null
+  }
+})
+
+export const getTeachingDocument = cache(async (slug: string) => {
+  try {
+    const mdxPath = path.join(process.cwd(), 'contents', 'teaching', slug, 'index.mdx')
+    const mdx = await fs.readFile(mdxPath, 'utf-8')
+    const parsed = await parseMdx<any>(mdx)
+    return { frontmatter: parsed.frontmatter, content: parsed.content }
+  } catch (error) {
+    console.error(`Error parsing teaching section ${slug}:`, error)
+    return null
+  }
+})
+
+export interface CommunityEntry {
+  content: ReactElement
+  date?: string
+  description?: string
+  presenter?: string
+  section: string
+  slug: string
+  title: string
+  venue?: string
+}
+
+export const getCommunityEntries = cache(async (section: string): Promise<CommunityEntry[]> => {
+  const entriesDir = path.join(process.cwd(), 'contents', section)
+  try {
+    const files = (await fs.readdir(entriesDir)).filter((file) => file.endsWith('.md') || file.endsWith('.mdx'))
+    const entries = await Promise.all(files.map(async (file) => {
+      const raw = await fs.readFile(path.join(entriesDir, file), 'utf-8')
+      const { data } = matter(raw)
+      if (data.section !== section || file.startsWith('_')) return null
+      const parsed = await parseMdx<any>(raw)
+      return { content: parsed.content, date: data.date, description: data.description, presenter: data.presenter, section, slug: path.parse(file).name, title: data.title || path.parse(file).name, venue: data.venue }
+    }))
+    const validEntries = entries.filter((entry): entry is NonNullable<typeof entry> => entry !== null)
+    return validEntries.sort((a, b) => (b.date || '').localeCompare(a.date || ''))
+  } catch {
+    return []
+  }
+})
+
 export const getNestedContent = async (basePath: string) => {
   const sections: Array<{ section: string; items: any[] }> = []
   const generalItems: any[] = []
 
   try {
-    const absoluteBasePath = path.isAbsolute(basePath) 
+    const absoluteBasePath = path.isAbsolute(basePath)
       ? basePath 
       : path.join(process.cwd(), basePath)
+    const contentRoot = path.join(process.cwd(), 'contents')
+    const logicalBasePath = path.relative(contentRoot, absoluteBasePath).replace(/\\/g, '/')
 
     const entries = await fs.readdir(absoluteBasePath)
 
@@ -169,7 +226,7 @@ export const getNestedContent = async (basePath: string) => {
           title: parsed.frontmatter.title,
           description: parsed.frontmatter.description,
           image: formatImageUrl(parsed.frontmatter.image),
-          href: `/${path.basename(absoluteBasePath.split('contents')[0].replace('/', ''))}/`,
+          href: `/${logicalBasePath}/`,
         })
       } 
       else if (stats.isDirectory()) {
@@ -188,7 +245,7 @@ export const getNestedContent = async (basePath: string) => {
                 title: parsed.frontmatter.title,
                 description: parsed.frontmatter.description,
                 image: formatImageUrl(parsed.frontmatter.image),
-                href: `/${path.basename(absoluteBasePath.split('contents')[0].replace('/', ''))}/${entry}/${subEntry}`,
+                href: `/${logicalBasePath}/${entry}/${subEntry}`,
               })
             }
           } catch (e) {

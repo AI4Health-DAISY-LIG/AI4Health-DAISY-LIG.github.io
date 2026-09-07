@@ -1,14 +1,17 @@
 # AI4Health @DAISY, LIGLAB website
 
-Our website uses Documents: a modern documentation starter kit built with **Next.js**, **React**, **Tailwind CSS**, and **TypeScript**. Designed for businesses, product teams, and technical writers, it provides a scalable and efficient foundation for building documentation websites, product manuals, and knowledge bases.
+AI4Health@DAISY is the public research and teaching website for the DAISY team at
+the Grenoble Computer Science Laboratory (LIG). It is built with **Next.js**,
+**React**, **Tailwind CSS**, and **TypeScript**, with public page content authored
+as Markdown/MDX.
 
 
 
 ## Installation
 
 ```bash
-git clone https://github.com/rubixvi/rubix-documents.git
-cd rubix-documents
+git clone https://github.com/AI4Health-DAISY-LIG/AI4Healthwebsite.git
+cd AI4Healthwebsite
 pnpm install
 pnpm generate-content-json
 pnpm run dev
@@ -26,6 +29,98 @@ pnpm run start
 The GitHub Actions workflow in `.github/workflows/deploy.yml` builds and deploys the
 static site to GitHub Pages. In the repository settings, choose **Pages > Build and
 deployment > Source > GitHub Actions**.
+
+## Editing site content
+
+Public editable content is organized below `contents/`. Each page is an `index.mdx`
+file, so you can add text with Markdown and metadata at the top of the file.
+
+- Projects: `contents/projects/<project-name>/index.mdx`. This is also the content
+  rendered at `/projects/<project-name>`.
+- People: `contents/our-group/<section>/<person>/index.mdx`.
+- Talks, openings, and meetings: `contents/docs/talks/index.mdx`,
+  `contents/docs/openings/index.mdx`, and `contents/docs/group-meetings/index.mdx`.
+- Teaching: `contents/teaching/tutorials/index.mdx`, `presentations/index.mdx`,
+  `courses/index.mdx`, and `material/index.mdx`.
+
+The Teaching left panel is configured in `settings/teaching-navigation.ts`. Change
+the section names or subparts there when the structure of the Teaching area changes;
+put the prose and links in the matching MDX files.
+
+To add a project, create its folder and `index.mdx`, then add frontmatter such as:
+
+```mdx
+---
+title: "My new project"
+description: "A short description shown on the Research page."
+image: "images/my-project.jpg"
+---
+
+# My new project
+
+Write the public project description here.
+```
+
+The homepage's research-unit panel is UI content in `app/page.tsx`; edit that file
+to change its wording, labels, icon, or visual composition.
+
+### Add member photos
+
+1. Put a public image in `public/images/people/`, for example
+   `public/images/people/sandrine-muller.jpg`.
+2. Add this field to that person's `index.mdx` frontmatter:
+
+   ```yaml
+   image: "images/people/sandrine-muller.jpg"
+   ```
+
+3. Commit and push. The group card reads the `image` field automatically. Use a
+   properly licensed photograph and obtain permission before publishing it.
+
+The Contact page intentionally does not publish a direct email address. Link to an
+institutional profile or contact form from `app/find-us/page.tsx` instead.
+
+### Add talks, openings, or group meetings
+
+Create one file per event in the matching folder:
+
+- `contents/talks/YYYY-MM-DD-short-slug.md`
+- `contents/openings/YYYY-MM-DD-short-slug.md`
+- `contents/group-meetings/YYYY-MM-DD-short-slug.md`
+
+The filename is the stable identifier and the `section` frontmatter value decides
+which page displays the entry. Use this frontmatter convention:
+
+```yaml
+---
+section: talks
+title: "Talk title"
+date: "YYYY-MM-DD"
+venue: "Venue or location"
+description: "One sentence shown in the listing."
+---
+```
+
+Change `section` to `openings` or `group-meetings` for those pages. The listing is
+sorted newest first by `date`; files beginning with `_` are templates and are not
+displayed. Write the event details below the frontmatter in Markdown.
+
+Group meetings display the three newest dated files on `/group-meetings`. Older
+meetings are available from `/group-meetings/archive`. Add the presenter with:
+
+```yaml
+presenter: "Name"
+```
+
+### Publications
+
+The Publications page is generated from the public Google Scholar profile
+`MwfiidYAAAAJ`. The deployment workflow runs `pnpm run update-publications` before
+the static build and stores the result in `public/search-data/publications.json`.
+Google Scholar can occasionally rate-limit automated requests; in that case the
+last successful snapshot is retained and deployment still succeeds. To refresh it
+locally, run `pnpm run update-publications`, review the generated JSON, and build
+the site.
 
 ## Promote a teaching website
 
@@ -126,7 +221,7 @@ Le contenu est stocké dans le dossier contents/docs/. Chaque page nécessite so
  • Fichier : Ajoutez un fichier index.mdx à l'intérieur.                                                                                  
  • Exemple : Pour une page "Projets", créez contents/docs/projects/index.mdx.                                                            
  
- Le système de routagese fait alors automatiquement et dynamiquement 'lib/pageroutes'.ts                                                                                                            
+ Le système de routage se fait alors automatiquement et dynamiquement 'lib/pageroutes'.ts                                                                                                            
                                                                                     
 
 2. Configurer la navigation (L'Interface)                                                                                                 
@@ -157,12 +252,11 @@ Utilisez ceci pour des pages comme "About", "Contact" ou "Projects" qui n'ont pa
                                                                                                                                                    
    {                                                                                                                                               
      title: 'Projects',                                                                                                                            
-     href: '/projects', // L'URL doit correspondre exactement au nom du dossier dans app/                                                          
+     href: '/projects', // L'URL needs to correspond exactly yo the folder name in app/                                                      
    }                                                                                                                                      
 
 ##### Ajouter du contenu dans la page standalone:
-Oui, c'est exactement cela. Pour que votre fonction getProjects puisse trouver et lire les données, vous devez respecter une structure de dossiers 
-précise.                                                                                                                                           
+Pour que votre fonction getProjects puisse trouver et lire les données, vous devez respecter une structure de dossiers précise.                                                                                                                                           
 
 Chaque projet doit avoir son propre dossier à l'intérieur de contents/projects/, et ce dossier doit contenir un fichier nommé index.mdx.           
 

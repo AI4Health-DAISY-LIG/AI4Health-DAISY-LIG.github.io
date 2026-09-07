@@ -15,9 +15,9 @@ export default function FindUsPage() {
             Tell us about a data source, biological question, or project where AI could help make
             health research more understandable and reusable.
           </p>
-          <a className="font-semibold text-primary underline" href="mailto:sandrine.muller@univ-grenoble-alpes.fr">
-            sandrine.muller@univ-grenoble-alpes.fr
-          </a>
+          <p className="text-sm text-muted-foreground">
+            Please contact us through the LIG laboratory directory or our institutional profiles.
+          </p>
         </div>
         <div className="space-y-4">
           <h2 className="text-2xl font-semibold">Visit LIGLAB</h2>

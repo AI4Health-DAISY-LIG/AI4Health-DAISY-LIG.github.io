@@ -33,6 +33,7 @@ jobs:
           cache: pnpm
       - run: pnpm install --frozen-lockfile
       - run: pnpm run update-teaching-sites
+      - run: pnpm run update-publications
       - run: pnpm run generate-content-json
       - run: pnpm run build
       - uses: actions/configure-pages@v5

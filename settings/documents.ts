@@ -6,6 +6,22 @@ export const Documents: Paths[] = [
     href: '/main',
     heading: 'AI4Health@DAISY-LIGLAB',
   },
+  {
+    spacer: true,
+  },
+  {
+    heading: 'Community',
+    title: 'Talks',
+    href: '/talks',
+  },
+  {
+    title: 'Openings',
+    href: '/openings',
+  },
+  {
+    title: 'Group meetings',
+    href: '/group-meetings',
+  },
   // {
   //   title: 'Our group',
   //   href: '/structure',

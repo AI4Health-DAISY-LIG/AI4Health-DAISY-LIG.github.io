@@ -1,4 +1,5 @@
 import { Card } from '@/components/markdown/card'
+import Image from 'next/image'
 import { getNestedContent } from '@/lib/markdown' 
 
 export default async function OurGroupPage() { 
@@ -15,8 +16,27 @@ export default async function OurGroupPage() {
   }
 
   return (
-    <section className="py-12 px-5 sm:px-8 space-y-16">
-      <h1 className="text-4xl font-bold text-center">Our Group</h1> 
+    <section className="mx-auto max-w-7xl space-y-16 px-2 py-14 sm:px-5 sm:py-20">
+      <header className="grid gap-8 border-b border-foreground/20 pb-12 lg:grid-cols-[1fr_1.1fr] lg:items-end">
+        <div className="space-y-4">
+          <p className="eyebrow">People</p>
+          <h1 className="display-font text-5xl font-bold leading-none sm:text-7xl">The people behind the work.</h1>
+        </div>
+        <div className="space-y-5">
+          <Image
+            alt="AI4Health@DAISY group outside LIGLAB"
+            className="h-64 w-full object-cover object-center"
+            height={500}
+            priority
+            src="/images/people/our-group.jpeg"
+            width={900}
+          />
+          <p className="max-w-xl text-lg leading-8 text-muted-foreground">
+            AI4Health@DAISY brings together researchers and students who care about useful,
+            explainable systems for health and biology.
+          </p>
+        </div>
+      </header>
 
       {sections.map((section) => {
         const sectionTitle = formatSectionTitle(section.section)

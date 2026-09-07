@@ -5,25 +5,23 @@ export default async function ProjectsPage() {
   const projects = await getProjects()
 
   return (
-    <section className="py-12 px-5 sm:px-8">
-      <h1 className="text-4xl font-bold mb-10 text-center">Our Projects</h1>
-      <h2 className="text-4xl font-bold mb-10 text-center">Advancing systems biology through end-to-end Artificial Intelligence</h2>
-       <p>Our group develops sophisticated learning architectures to bridge the gap between raw biological data and mechanistic understanding. We specialize in building robust, end-to-end frameworks—from Bayesian inference to reinforcement learning—designed to decode the multi-scale complexity of biological systems.
-       </p>
-       <p>
-       * Data Representation* : Knowledge graphs, ontologies, and relational databases.      </p>
-       <p>
-       * Advanced Modeling* : Structural learning, statistical modeling, and AI-assisted discovery.      </p>
-       <p>
-       * Engineering Excellence* : Optimized APIs and high-performance computing pipelines.      </p>
-       <p> 
-       </p>
-       <p>
-       *Our scientific engagement* : Open Science • Reproducibility • Explainable AI • Co-design
-       </p>
-       <p> 
-       </p>
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6">
+    <section className="mx-auto max-w-7xl space-y-14 px-2 py-14 sm:px-5 sm:py-20">
+      <header className="grid gap-8 border-b border-foreground/20 pb-12 lg:grid-cols-[1fr_1.1fr] lg:items-end">
+        <div className="space-y-4">
+          <p className="eyebrow">Research</p>
+          <h1 className="display-font text-5xl font-bold leading-none sm:text-7xl">Questions first. Models second.</h1>
+        </div>
+        <p className="max-w-xl text-lg leading-8 text-muted-foreground">
+          We develop end-to-end methods that turn complex biomedical data into interpretable
+          evidence, from knowledge graphs and data quality to reinforcement learning and discovery.
+        </p>
+      </header>
+      <div className="grid gap-5 border-b border-foreground/20 pb-14 sm:grid-cols-3">
+        <div><p className="eyebrow">Data representation</p><p className="mt-3 text-sm leading-6 text-muted-foreground">Knowledge graphs, ontologies, and relational databases.</p></div>
+        <div><p className="eyebrow">Advanced modeling</p><p className="mt-3 text-sm leading-6 text-muted-foreground">Structural learning, statistical modeling, and AI-assisted discovery.</p></div>
+        <div><p className="eyebrow">Scientific practice</p><p className="mt-3 text-sm leading-6 text-muted-foreground">Open science, reproducibility, explainability, and co-design.</p></div>
+      </div>
+      <div className="grid grid-cols-1 gap-6 sm:grid-cols-2 lg:grid-cols-3">
         {projects.map((project) => (
           <Card
             key={project.title}

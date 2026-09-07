@@ -37,7 +37,7 @@ export function Card({
   const content = (
     <div
       className={clsx(
-        'group relative flex overflow-hidden rounded-lg border bg-white shadow-md transition-shadow duration-300 ease-in-out hover:shadow-lg dark:border-neutral-800 dark:bg-neutral-900 hover:dark:shadow-md',
+        'group relative flex overflow-hidden rounded-sm border border-primary/15 bg-secondary/55 shadow-sm transition-all duration-300 ease-in-out hover:-translate-y-1 hover:border-primary/35 hover:bg-secondary/80 hover:shadow-lg',
         effectiveVariant === 'small'                                                                                                                                                          
           ? 'items-center space-x-2 p-3'                                                                                                                                                      
           : effectiveVariant === 'image'                                                                                                                                                      

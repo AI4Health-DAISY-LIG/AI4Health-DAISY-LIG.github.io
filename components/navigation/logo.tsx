@@ -14,7 +14,9 @@ export function Logo() {
       <Image
         alt={`${Settings.title} main logo`}
         aria-label={`${Settings.title} main logo`}
+        className="h-[34px] w-[34px]"
         decoding="async"
+        style={{ height: 34, width: 34 }}
         height={34}
         loading="lazy"
         src={Settings.siteicon}
