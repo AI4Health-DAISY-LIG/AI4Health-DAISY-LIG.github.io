@@ -1,0 +1,43 @@
+name: Deploy AI4Health website
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+on:
+  push:
+    branches: [main]
+  repository_dispatch:
+    types: [teaching-site-updated]
+  workflow_dispatch:
+
+concurrency:
+  group: pages
+  cancel-in-progress: true
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: pnpm/action-setup@v4
+        with:
+          version: 11.17.0
+      - uses: actions/setup-node@v4
+        with:
+          node-version: 24
+          cache: pnpm
+      - run: pnpm install --frozen-lockfile
+      - run: pnpm run update-teaching-sites
+      - run: pnpm run generate-content-json
+      - run: pnpm run build
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: ./out
+      - id: deployment
+        uses: actions/deploy-pages@v4

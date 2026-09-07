@@ -29,7 +29,7 @@ export function Sidebar() {
   )
 }
 
-export function SheetLeft() {
+export function SheetLeft({ navLinks }: { navLinks: { title: string; href: string; external?: boolean }[] }) {
   return (
     <Sheet>
       <SheetTrigger asChild>
@@ -47,7 +47,7 @@ export function SheetLeft() {
         <SheetDescription className="sr-only">Page navigation</SheetDescription>
         <ScrollArea className="flex h-full flex-col overflow-y-auto">
           <div className="mx-0 mt-3 flex flex-col gap-2.5 px-5">
-            <NavMenu isSheet />
+            <NavMenu isSheet navLinks={navLinks} />
             <Separator className="my-2" />
             <PageMenu isSheet />
           </div>

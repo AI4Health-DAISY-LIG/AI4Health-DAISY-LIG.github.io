@@ -28,28 +28,6 @@ export const Documents: Paths[] = [
   //     },
   //   ],
   // },
-  {
-    spacer: true,
-  },
-    {
-    heading: 'Tools',
-    title: 'BioMedCAT',
-    href: '/BioMedCAT',
-    items: [
-      {
-        title: 'Installation',
-        href: '/installation',
-      },
-      {
-        title: 'Setup',
-        href: '/setup',
-      },
-      {
-        title: 'Changelog',
-        href: '/changelog',
-      },
-    ],
-  },
   // {
   //   spacer: true,
   // },

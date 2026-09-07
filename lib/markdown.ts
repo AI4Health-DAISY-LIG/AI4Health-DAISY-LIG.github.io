@@ -128,7 +128,7 @@ export const getProjects = async () => {
           const parsed = await parseMdx<any>(mdx)                                                                                                                                     
           return {                                                                                                                                                                      
             title: parsed.frontmatter.title,
-            description: parsed.find?.frontmatter?.description || parsed.frontmatter.description,                                                                                       
+            description: parsed.frontmatter?.description || parsed.frontmatter.description,                                                                                       
             href: `/projects/${folder}`,                                                                                                                                                
             image: formatImageUrl(parsed.frontmatter.image),                                                                                                                             
           }                                                                                                                                                                             
@@ -239,7 +239,7 @@ export async function getTable(
   } else {
     const contentPath = path.join(process.cwd(), 'contents', 'docs', `${slug}/index.mdx`)
     try {
-      const stream = createReadStream(content<0xA0>contentPath, { encoding: 'utf-8' })
+      const stream = createReadStream(contentPath, { encoding: 'utf-8' })
       for await (const chunk of stream) {
         mdx += chunk
       }

@@ -26,7 +26,7 @@ export function Navbar({ navLinks }: NavbarProps) {
   return (
     <nav className="bg-opacity-5 sticky top-0 z-50 mx-auto flex h-16 w-full items-center justify-between border-b p-1 px-2 backdrop-blur-xl backdrop-filter sm:p-3 md:gap-2 md:px-4">
       <div className="flex items-center gap-5">
-        <SheetLeft />
+        <SheetLeft navLinks={navLinks} />
         <Logo />
         <div className="hidden items-center gap-5 text-sm font-medium text-muted-foreground md:flex">
           <NavMenu navLinks={navLinks} />

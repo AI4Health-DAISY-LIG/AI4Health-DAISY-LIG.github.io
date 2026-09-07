@@ -23,7 +23,65 @@ pnpm run build
 pnpm run start
 ```
 
-Deploy to GitHubPages for automated builds and hosting.
+The GitHub Actions workflow in `.github/workflows/deploy.yml` builds and deploys the
+static site to GitHub Pages. In the repository settings, choose **Pages > Build and
+deployment > Source > GitHub Actions**.
+
+## Promote a teaching website
+
+Teaching websites remain in their own repositories. The main site displays a small
+catalog at `/teaching`; it does not copy or rebuild the child website.
+
+### Add a repository
+
+1. Add one entry to `teachingRepositories` in `settings/teaching-sites.ts`:
+
+   ```ts
+   {
+     owner: 'AI4Health-DAISY-LIG',
+     repo: 'MyCourse',
+     title: 'My Course',
+     description: 'A short public description of the course.',
+     url: 'https://ai4health-daisy-lig.github.io/MyCourse/',
+   }
+   ```
+
+2. Add `.github/site.json` to the child repository:
+
+   ```json
+   {
+     "title": "My Course",
+     "description": "A short public description of the course.",
+     "url": "https://ai4health-daisy-lig.github.io/MyCourse/"
+   }
+   ```
+
+3. Add this workflow to the child repository as `.github/workflows/notify-main-site.yml`:
+
+   ```yaml
+   name: Notify AI4Health main site
+   on:
+     push:
+       branches: [main]
+   jobs:
+     notify:
+       runs-on: ubuntu-latest
+       steps:
+         - uses: peter-evans/repository-dispatch@v3
+           with:
+             token: ${{ secrets.MAIN_SITE_DISPATCH_TOKEN }}
+             repository: AI4Health-DAISY-LIG/AI4Healthwebsite
+             event-type: teaching-site-updated
+   ```
+
+4. Create a fine-grained GitHub token with access to the main repository's
+   `Contents` permission, and save it in the child repository as the
+   `MAIN_SITE_DISPATCH_TOKEN` Actions secret. A push to the child repository then
+   triggers the main site's workflow, which fetches `.github/site.json`, rebuilds the
+   catalog, and redeploys GitHub Pages.
+
+For a quick local check, run `pnpm run update-teaching-sites` and inspect
+`public/search-data/teaching-sites.json`.
 
 ---
 ## Customization
