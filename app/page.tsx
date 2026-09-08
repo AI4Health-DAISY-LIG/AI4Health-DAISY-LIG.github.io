@@ -1,11 +1,22 @@
-import { LuArrowUpRight, LuDna, LuGithub, LuMoveDown } from 'react-icons/lu'
+import Image from 'next/image'
+import { LuArrowUpRight, LuGithub, LuMoveDown } from 'react-icons/lu'
 
 import { Link } from '@/lib/transition'
 import { GitHubLink } from '@/settings/navigation-constants'
 
 export default function Home() {
   return (
-    <section className="mx-auto max-w-7xl px-2 pb-20 pt-12 sm:px-5 sm:pt-20">
+    <section className="relative isolate mx-auto max-w-7xl overflow-hidden px-2 pb-20 pt-12 sm:px-5 sm:pt-20">
+      <div className="frontpage-image absolute inset-x-0 top-0 -z-10 h-[34rem]" aria-hidden="true">
+        <Image
+          alt=""
+          className="object-cover object-right"
+          fill
+          priority
+          sizes="100vw"
+          src="/images/frontpage-image.png"
+        />
+      </div>
       <div className="grid items-end gap-12 lg:grid-cols-[1.2fr_0.8fr] lg:gap-20">
         <div className="space-y-8">
           <p className="eyebrow">AI4Health / DAISY / LIGLAB</p>
@@ -26,24 +37,7 @@ export default function Home() {
           </div>
         </div>
 
-        <div className="lab-panel relative min-h-80 overflow-hidden p-6 sm:p-8">
-          <div className="absolute -right-16 -top-16 size-56 rounded-full border-[28px] border-primary/20" />
-          <div className="absolute -bottom-24 -left-12 size-48 rounded-full border-[18px] border-accent/70" />
-          <div className="relative flex h-full flex-col justify-between gap-12">
-            <div className="flex items-center justify-between border-b border-foreground/15 pb-4 text-xs font-bold uppercase tracking-widest">
-              <span>Research unit</span>
-              <LuDna className="size-6 text-primary" />
-            </div>
-            <p className="display-font max-w-xs text-3xl font-semibold leading-tight">
-              From data representation to discovery.
-            </p>
-            <div className="grid grid-cols-3 gap-3 text-xs font-bold uppercase tracking-wider">
-              <span className="border-t-2 border-primary pt-2">Graphs</span>
-              <span className="border-t-2 border-primary pt-2">Models</span>
-              <span className="border-t-2 border-primary pt-2">Impact</span>
-            </div>
-          </div>
-        </div>
+        <div className="hidden min-h-80 lg:block" aria-hidden="true" />
       </div>
 
       <div className="mt-24 grid gap-5 border-t border-foreground/20 pt-6 sm:grid-cols-3">
