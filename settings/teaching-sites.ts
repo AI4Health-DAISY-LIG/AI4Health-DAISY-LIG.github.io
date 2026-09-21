@@ -13,4 +13,11 @@ export const teachingRepositories = [
     description: 'From Nucleus to Neural Networks: Foundations of AI in Transcriptomics.',
     url: 'https://ai4health-daisy-lig.github.io/AI4Transcriptomics/',
   },
+  {
+    owner: 'AI4Health-DAISY-LIG',
+    repo: 'python4beginners',
+    title: 'Python4Beginners',
+    description: 'An introduction to Python programming for beginners.',
+    url: 'https://ai4health-daisy-lig.github.io/python4beginners/',
+  },
 ] as const
